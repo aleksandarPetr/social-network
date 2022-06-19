@@ -5,12 +5,15 @@ import styles from '../styles/Form.module.css'
 export function Form({ data }) {
 
     const [personName, setPersonName] = useState('')
+    const [directFriends, setDirectFriends] = useState([])
 
     const onChangeHandler = (event) => {
         event.preventDefault()
         setPersonName(event.target.value)
     }
+
     const arrayOfFriends = []
+
     const findFriends = () => {
         const enteredName = personName.toLowerCase()
         data.map((person) => {
@@ -20,7 +23,7 @@ export function Form({ data }) {
                 person.friends.map((friend)=>{
                     data.map((finalFriend)=>{
                         if(finalFriend.id === friend) {
-                            console.log(finalFriend)
+                            // console.log(finalFriend)
                             arrayOfFriends.push(finalFriend)
                         }
                     })
@@ -30,23 +33,12 @@ export function Form({ data }) {
         // console.log(arrayOfFriends)
         // return arrayOfFriends
     }
-    console.log(arrayOfFriends)
-    // const directFriends = findFriends()
-    // console.log(directFriends)
+
+    setDirectFriends(arrayOfFriends)
+    console.log(directFriends)
 
     // const directFriends = findFriends()
     // console.log(directFriends)
-    // {
-    //     "id": 19,
-    //     "firstName": "Catriona",
-    //     "surname": "Long",
-    //     "age": 28,
-    //     "gender": "female",
-    //     "friends": [
-    //     11,
-    //     20
-    // ]
-    // },
 
     return (
         <div
@@ -75,7 +67,7 @@ export function Form({ data }) {
 
             <div className={styles.displayData}>
                 <ul>
-                    {arrayOfFriends.map(friend => {
+                    {directFriends.map(friend => {
                         return (
                             <li key={friend.id}>
                                 {friend}
@@ -84,6 +76,7 @@ export function Form({ data }) {
                     })}
                 </ul>
             </div>
+
             {/*<div className={styles.displayData}>*/}
             {/*    {arrayOfFriends.map((friend)=>{*/}
             {/*        return (<li key={friend.id}>{friend}</li>)*/}
