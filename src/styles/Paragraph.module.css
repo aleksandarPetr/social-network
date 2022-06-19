@@ -1,0 +1,22 @@
+.paragraph {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /*font-family: SansSerif;*/
+    color: lightslategray;
+    padding-top: 7%;
+    max-width: 50%;
+}
+
+.title {
+    align-self: flex-start;
+    font-weight: bolder;
+    font-family: Tahoma;
+}
+
+.text {
+    align-self: flex-start;
+    margin: 0;
+
+}
