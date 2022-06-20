@@ -11,9 +11,13 @@ export function Form({data}) {
     const [personName, setPersonName] = useState('')
     const [updates, setUpdates] = useState(0)
 
+    const clearSymbols = (string) => {
+        return string.replace(/[^a-zA-Z ]/g, "")
+    }
+
     const onChangeHandler = (event) => {
         event.preventDefault()
-        setPersonName(event.target.value)
+        setPersonName(clearSymbols(event.target.value))
     }
 
     const dataValidation = () => {
@@ -38,7 +42,7 @@ export function Form({data}) {
     const checkDatabase = () => {
         const array = []
         data.forEach((person) => {
-            const name = `${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`
+            const name = clearSymbols(`${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`)
             if(personName.toLowerCase() === name){
                 array.push(person)
             }
@@ -55,7 +59,7 @@ export function Form({data}) {
         arrayOfFriends = []
         const enteredName = personName.toLowerCase()
         data.map((person) => {
-            const name = `${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`
+            const name = clearSymbols(`${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`)
             if (enteredName === name) {
                 person.friends.map((friend) => {
                     data.map((finalFriend) => {
@@ -96,16 +100,21 @@ export function Form({data}) {
     const displayFriendsOfDirectFriends = () => {
         friendsOfDirectFriends = []
         const friendsOfDirectFriendsIds = friendsOfFriendsIds()
-        friendsOfDirectFriendsIds.forEach((person) => {
-            const friend = displayPersonById(data, person)
+        // friendsOfDirectFriendsIds.forEach((person) => {
+        for(let i = 0; i < friendsOfDirectFriendsIds.length; i++) {
+            const person = displayPersonById(data, friendsOfDirectFriendsIds[i])
+            const personFullName = clearSymbols(`${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`)
+            if (personName.toLowerCase() === personFullName.toLowerCase()) {continue}
+            const friend = displayPersonById(data, friendsOfDirectFriendsIds[i])
             friendsOfDirectFriends.push(friend)
-        })
+            // })
+        }
         return friendsOfDirectFriends
     }
 
-    function registerPersonByName(data, personName) {
+    const registerPersonByName = (data, personName) => {
         for(const person of data){
-            const name = `${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`
+            const name = clearSymbols(`${person.firstName.toLowerCase()} ${person.surname.toLowerCase()}`)
             if(personName.toLowerCase() === name.toLowerCase()){
                 return person
             }
